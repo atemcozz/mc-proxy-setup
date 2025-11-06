@@ -1,0 +1,15 @@
+[Unit]
+Description=AutoSSH Reverse Tunnel to VPS for Minecraft port forwarding
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=30
+
+# User to run the tunnel as (should be a non-root user)
+User=[YOUR_LOCAL_USER] 
+ExecStart=/usr/bin/autossh -M 0 -N -o "ExitOnForwardFailure yes" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R [VPS_PORT]:localhost:[LOCAL_TUNNEL_PORT] [HOST_ALIAS]
+
+[Install]
+WantedBy=multi-user.target
